@@ -2,12 +2,12 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Онлайн-співпраця</title>
+  <title>Work Club – Онлайн-співпраця</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: system-ui, Arial, sans-serif; max-width: 400px; margin: 30px auto; background: #fafbfc; color: #202020;}
     .card { background: #fff; padding: 32px 24px; border-radius: 16px; box-shadow: 0 2px 16px #0001;}
-    h1 { font-size: 1.3em; }
+    h1, h2 { font-size: 1.2em; margin-top: 0; }
     button { margin: 12px 0; padding: 12px 18px; font-size: 1em; border-radius: 8px; border: none; background: #3B82F6; color: #fff; cursor: pointer;}
     button:hover { background: #2563EB; }
     .small { font-size: 0.95em; color: #616161; margin-bottom: 8px; }
@@ -22,17 +22,24 @@
     .progress-bar-fg {
       height: 100%; background: #3B82F6; width: 0%; border-radius: 6px; transition: width 0.5s cubic-bezier(.4,1.7,.5,.7);
     }
+    .footer {
+      margin: 36px 0 12px 0; padding: 24px 0 0 0; text-align: center; font-size: 0.9em; color: #8a8a8a; border-top: 1px solid #ececec;
+    }
+    .footer a { color: #3B82F6; text-decoration: none; margin: 0 6px; }
+    .footer a:hover { text-decoration: underline; }
+    .policy, .terms {display:none; text-align:left; background:#fff; padding:32px 24px; border-radius:16px; box-shadow:0 2px 16px #0001; max-width: 400px; margin: 30px auto;}
+    .policy h2, .terms h2 {margin-top:0;}
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="card" id="main-content">
     <!-- Крок 1 -->
     <div id="step-1">
       <div class="step-indicator"><span id="step-number">1</span>/3</div>
       <div class="progress-bar-bg">
         <div id="progress-bar" class="progress-bar-fg" style="width:33%"></div>
       </div>
-      <h1>Дякуємо за інтерес до нашої команди.</h1>
+      <h1>Дякуємо за інтерес до нашої команди Work Club.</h1>
       <p>Перш за все три коротких запитання:</p>
       <div class="small">Скільки тобі років?</div>
       <button onclick="nextAge(0)">До 18</button>
@@ -73,7 +80,7 @@
     <div id="step-3" class="hidden">
       <div class="step-indicator"><span id="step-number3">3</span>/3</div>
       <div class="progress-bar-bg">
-        <div id="progress-bar3" class="progress-bar-fg" style="width:100%"></div>
+        <div class="progress-bar-fg" style="width:100%"></div>
       </div>
       <div class="small">Який графік тобі підходить?</div>
       <button onclick="nextShift(0)">07:00-15:00</button>
@@ -103,8 +110,31 @@
     </div>
   </div>
 
+  <!-- Політика конфіденційності -->
+  <div class="policy" id="policy-content">
+    <h2>Політика конфіденційності</h2>
+    <p>Ми, Work Club, поважаємо вашу конфіденційність і не збираємо особисту інформацію без вашої згоди. На цьому сайті не здійснюється збереження особистих даних, окрім тих, які ви самостійно можете надати нам для контакту. Якщо ви маєте запитання щодо вашої конфіденційності, будь ласка, звертайтеся на <a href="mailto:ancrushagency@gmail.com">ancrushagency@gmail.com</a>.</p>
+    <p>Відвідуючи цей сайт, ви погоджуєтесь із цими умовами. Оновлення цієї політики можливе без попереднього повідомлення.</p>
+    <p><a href="#" onclick="showMain(event)">← Повернутись</a></p>
+  </div>
+
+  <!-- Умови використання -->
+  <div class="terms" id="terms-content">
+    <h2>Умови використання</h2>
+    <p>Вся інформація на цьому сайті надається лише з ознайомчою метою. Використовуючи сайт Work Club, ви погоджуєтесь не здійснювати протиправних дій, не надавати неправдиву інформацію та не використовувати даний ресурс для цілей, що суперечать чинному законодавству.</p>
+    <p>Контактна пошта для зворотного звʼязку: <a href="mailto:ancrushagency@gmail.com">ancrushagency@gmail.com</a>.</p>
+    <p><a href="#" onclick="showMain(event)">← Повернутись</a></p>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 Work Club <br>
+    <a href="#" onclick="showPolicy(event)">Політика конфіденційності</a> |
+    <a href="#" onclick="showTerms(event)">Умови використання</a> <br>
+    Email: <a href="mailto:ancrushagency@gmail.com">ancrushagency@gmail.com</a>
+  </div>
+
   <script>
-    // Показати 2 крок
+    // Логіка кроків
     function nextAge(val) {
       document.getElementById("step-1").classList.add("hidden");
       if (val === 0) {
@@ -113,7 +143,6 @@
         document.getElementById("step-2").classList.remove("hidden");
       }
     }
-    // Показати 3 крок
     function nextDevice(val) {
       document.getElementById("step-2").classList.add("hidden");
       if (val === 0) {
@@ -122,7 +151,6 @@
         document.getElementById("step-3").classList.remove("hidden");
       }
     }
-    // Фінал
     function nextShift(val) {
       document.getElementById("step-3").classList.add("hidden");
       if (val === 3) {
@@ -131,10 +159,29 @@
         document.getElementById("final").classList.remove("hidden");
       }
     }
-    // Перехід у Telegram
     function toTelegram() {
-      // Можна додати Meta Pixel тут: fbq('trackCustom', 'TelegramClick');
-      window.location.href = "https://t.me/your_bot"; // <-- Встав свій Telegram!
+      // Meta Pixel тут: fbq('trackCustom', 'TelegramClick');
+      window.location.href = "https://t.me/your_bot"; // <-- Замініть на свій Telegram бот!
+    }
+
+    // Політика/умови
+    function showPolicy(e) {
+      e.preventDefault();
+      document.getElementById("main-content").style.display = "none";
+      document.getElementById("terms-content").style.display = "none";
+      document.getElementById("policy-content").style.display = "block";
+    }
+    function showTerms(e) {
+      e.preventDefault();
+      document.getElementById("main-content").style.display = "none";
+      document.getElementById("policy-content").style.display = "none";
+      document.getElementById("terms-content").style.display = "block";
+    }
+    function showMain(e) {
+      e.preventDefault();
+      document.getElementById("main-content").style.display = "block";
+      document.getElementById("policy-content").style.display = "none";
+      document.getElementById("terms-content").style.display = "none";
     }
   </script>
 </body>
