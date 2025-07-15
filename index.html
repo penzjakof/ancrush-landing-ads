@@ -5,6 +5,7 @@
   <title>Онлайн-співпраця</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* ... (твої стилі без змін) ... */
     body { font-family: system-ui, Arial, sans-serif; max-width: 400px; margin: 30px auto; background: #fafbfc; color: #202020;}
     .card { background: #fff; padding: 32px 24px; border-radius: 16px; box-shadow: 0 2px 16px #0001;}
     h1, h2 { font-size: 1.2em; margin-top: 0; }
@@ -31,6 +32,23 @@
     .policy, .terms {display:none; text-align:left; background:#fff; padding:32px 24px; border-radius:16px; box-shadow:0 2px 16px #0001; max-width: 400px; margin: 30px auto;}
     .policy h2, .terms h2 {margin-top:0;}
   </style>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '643516465444480');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=643516465444480&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
   <div class="card" id="main-content">
@@ -171,8 +189,8 @@
     }
     function toTelegram() {
       // Meta Pixel кастомна подія для аналітики:
-      // fbq('trackCustom', 'TelegramClick');
-      window.location.href = "https://t.me/your_bot"; // <-- Замініть на свій Telegram бот!
+      fbq('trackCustom', 'TelegramClick');
+      window.location.href = "https://t.me/ancrush_job_bot"; // <-- Замініть на свій Telegram бот!
     }
 
     // Політика/умови
