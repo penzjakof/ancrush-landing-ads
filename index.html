@@ -2,13 +2,96 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Онлайн-команда</title>
+  <title>Онлайн-співпраця</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; max-width: 400px; margin: 30px auto; background: #fafbfc; color: #202020;}
+    .card { background: #fff; padding: 32px 24px; border-radius: 16px; box-shadow: 0 2px 16px #0001;}
+    h1 { font-size: 1.5em; }
+    button { margin: 12px 0; padding: 12px 18px; font-size: 1em; border-radius: 8px; border: none; background: #3B82F6; color: #fff; cursor: pointer;}
+    button:hover { background: #2563EB; }
+    .small { font-size: 0.95em; color: #616161; margin-bottom: 8px; }
+    .hidden { display: none; }
+    .tg-btn {background:#27A6E5;}
+    .tg-btn:hover {background:#1886bc;}
+  </style>
 </head>
 <body>
-  <h1>Вітаємо!</h1>
-  <p>Долучайся до нашої онлайн-команди.</p>
-  <p>Гнучкі вихідні, дистанційний формат. Досвід не обов'язковий.</p>
-  <button onclick="alert('Це лише приклад!')">Дізнатись більше</button>
+  <div class="card">
+    <div id="step-1">
+      <h1>👋 Вітаємо!</h1>
+      <p>Дякуємо за інтерес до онлайн-співпраці. Давай познайомимось ближче 💬</p>
+      <div class="small">Скільки тобі років?</div>
+      <button onclick="nextAge(0)">До 18</button>
+      <button onclick="nextAge(1)">18-30</button>
+      <button onclick="nextAge(2)">35+</button>
+    </div>
+
+    <div id="not18" class="hidden">
+      <p>На жаль, ця можливість лише для повнолітніх.</p>
+    </div>
+
+    <div id="step-2" class="hidden">
+      <div class="small">Чи маєш ноутбук або комп’ютер для роботи?</div>
+      <button onclick="nextDevice(1)">Так</button>
+      <button onclick="nextDevice(0)">Немає</button>
+    </div>
+
+    <div id="notDevice" class="hidden">
+      <p>Для онлайн-формату потрібен особистий пристрій.</p>
+    </div>
+
+    <div id="step-3" class="hidden">
+      <div class="small">Який графік тобі підходить?</div>
+      <button onclick="nextShift(0)">07:00-15:00</button>
+      <button onclick="nextShift(1)">15:00-23:00</button>
+      <button onclick="nextShift(2)">23:00-07:00</button>
+      <button onclick="nextShift(3)">Жоден</button>
+    </div>
+
+    <div id="notShift" class="hidden">
+      <p>На жаль, наразі інших варіантів немає.</p>
+    </div>
+
+    <div id="final" class="hidden">
+      <h2>Дякуємо за відповіді! 🙌</h2>
+      <p>Щоб отримати більше деталей, натисни кнопку нижче.</p>
+      <button class="tg-btn" onclick="toTelegram()">Перейти в Telegram</button>
+    </div>
+  </div>
+
+  <script>
+    function nextAge(val) {
+      document.getElementById("step-1").classList.add("hidden");
+      if (val === 0) {
+        document.getElementById("not18").classList.remove("hidden");
+      } else {
+        document.getElementById("step-2").classList.remove("hidden");
+      }
+    }
+
+    function nextDevice(val) {
+      document.getElementById("step-2").classList.add("hidden");
+      if (val === 0) {
+        document.getElementById("notDevice").classList.remove("hidden");
+      } else {
+        document.getElementById("step-3").classList.remove("hidden");
+      }
+    }
+
+    function nextShift(val) {
+      document.getElementById("step-3").classList.add("hidden");
+      if (val === 3) {
+        document.getElementById("notShift").classList.remove("hidden");
+      } else {
+        document.getElementById("final").classList.remove("hidden");
+      }
+    }
+
+    function toTelegram() {
+      // Тут можна додати Meta Pixel: fbq('trackCustom', 'TelegramClick');
+      window.location.href = "https://t.me/your_bot"; // <-- Замініть на свій Telegram бот!
+    }
+  </script>
 </body>
 </html>
