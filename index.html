@@ -7,41 +7,74 @@
   <style>
     body { font-family: system-ui, Arial, sans-serif; max-width: 400px; margin: 30px auto; background: #fafbfc; color: #202020;}
     .card { background: #fff; padding: 32px 24px; border-radius: 16px; box-shadow: 0 2px 16px #0001;}
-    h1 { font-size: 1.5em; }
+    h1 { font-size: 1.3em; }
     button { margin: 12px 0; padding: 12px 18px; font-size: 1em; border-radius: 8px; border: none; background: #3B82F6; color: #fff; cursor: pointer;}
     button:hover { background: #2563EB; }
     .small { font-size: 0.95em; color: #616161; margin-bottom: 8px; }
     .hidden { display: none; }
     .tg-btn {background:#27A6E5;}
     .tg-btn:hover {background:#1886bc;}
+    .step-indicator { margin-bottom: 12px; font-size: 1.05em; font-weight: 500; }
+    .progress-bar-bg {
+      width: 100%; height: 8px; background: #e0e7ef; border-radius: 6px; margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .progress-bar-fg {
+      height: 100%; background: #3B82F6; width: 0%; border-radius: 6px; transition: width 0.5s cubic-bezier(.4,1.7,.5,.7);
+    }
   </style>
 </head>
 <body>
   <div class="card">
+    <!-- Крок 1 -->
     <div id="step-1">
-      <h1>👋 Вітаємо!</h1>
-      <p>Дякуємо за інтерес до онлайн-співпраці. Давай познайомимось ближче 💬</p>
+      <div class="step-indicator"><span id="step-number">1</span>/3</div>
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fg" style="width:33%"></div>
+      </div>
+      <h1>Дякуємо за інтерес до нашої команди.</h1>
+      <p>Перш за все три коротких запитання:</p>
       <div class="small">Скільки тобі років?</div>
       <button onclick="nextAge(0)">До 18</button>
       <button onclick="nextAge(1)">18-30</button>
       <button onclick="nextAge(2)">35+</button>
     </div>
 
+    <!-- Недостатньо років -->
     <div id="not18" class="hidden">
+      <div class="step-indicator">1/3</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fg" style="width:33%"></div>
+      </div>
       <p>На жаль, ця можливість лише для повнолітніх.</p>
     </div>
 
+    <!-- Крок 2 -->
     <div id="step-2" class="hidden">
+      <div class="step-indicator"><span id="step-number2">2</span>/3</div>
+      <div class="progress-bar-bg">
+        <div id="progress-bar2" class="progress-bar-fg" style="width:66%"></div>
+      </div>
       <div class="small">Чи маєш ноутбук або комп’ютер для роботи?</div>
       <button onclick="nextDevice(1)">Так</button>
       <button onclick="nextDevice(0)">Немає</button>
     </div>
 
+    <!-- Відсутній пристрій -->
     <div id="notDevice" class="hidden">
+      <div class="step-indicator">2/3</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fg" style="width:66%"></div>
+      </div>
       <p>Для онлайн-формату потрібен особистий пристрій.</p>
     </div>
 
+    <!-- Крок 3 -->
     <div id="step-3" class="hidden">
+      <div class="step-indicator"><span id="step-number3">3</span>/3</div>
+      <div class="progress-bar-bg">
+        <div id="progress-bar3" class="progress-bar-fg" style="width:100%"></div>
+      </div>
       <div class="small">Який графік тобі підходить?</div>
       <button onclick="nextShift(0)">07:00-15:00</button>
       <button onclick="nextShift(1)">15:00-23:00</button>
@@ -49,11 +82,21 @@
       <button onclick="nextShift(3)">Жоден</button>
     </div>
 
+    <!-- Графік не підходить -->
     <div id="notShift" class="hidden">
+      <div class="step-indicator">3/3</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fg" style="width:100%"></div>
+      </div>
       <p>На жаль, наразі інших варіантів немає.</p>
     </div>
 
+    <!-- Успішне проходження -->
     <div id="final" class="hidden">
+      <div class="step-indicator">3/3</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fg" style="width:100%"></div>
+      </div>
       <h2>Дякуємо за відповіді! 🙌</h2>
       <p>Щоб отримати більше деталей, натисни кнопку нижче.</p>
       <button class="tg-btn" onclick="toTelegram()">Перейти в Telegram</button>
@@ -61,6 +104,7 @@
   </div>
 
   <script>
+    // Показати 2 крок
     function nextAge(val) {
       document.getElementById("step-1").classList.add("hidden");
       if (val === 0) {
@@ -69,7 +113,7 @@
         document.getElementById("step-2").classList.remove("hidden");
       }
     }
-
+    // Показати 3 крок
     function nextDevice(val) {
       document.getElementById("step-2").classList.add("hidden");
       if (val === 0) {
@@ -78,7 +122,7 @@
         document.getElementById("step-3").classList.remove("hidden");
       }
     }
-
+    // Фінал
     function nextShift(val) {
       document.getElementById("step-3").classList.add("hidden");
       if (val === 3) {
@@ -87,10 +131,10 @@
         document.getElementById("final").classList.remove("hidden");
       }
     }
-
+    // Перехід у Telegram
     function toTelegram() {
-      // Тут можна додати Meta Pixel: fbq('trackCustom', 'TelegramClick');
-      window.location.href = "https://t.me/your_bot"; // <-- Замініть на свій Telegram бот!
+      // Можна додати Meta Pixel тут: fbq('trackCustom', 'TelegramClick');
+      window.location.href = "https://t.me/your_bot"; // <-- Встав свій Telegram!
     }
   </script>
 </body>
